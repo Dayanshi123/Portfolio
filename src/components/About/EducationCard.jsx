@@ -23,28 +23,30 @@ const Education = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center text-[#d1fae5] py-12 bg-[#0a0a0a]">
+      <h2 className="text-4xl font-bold text-green-400 mb-12">Education</h2>
+
       <div className="relative w-full md:w-2/3 lg:w-1/2">
-        {/* Vertical line */}
-        <div className="absolute left-1/2 transform -translate-x-1/2 h-full border-l-4 border-gray-300"></div>
+        {/* Vertical Timeline Line */}
+        <div className="absolute left-1/2 transform -translate-x-1/2 h-full border-l-4 border-green-400"></div>
+
         {educationTimeline.map((item, index) => (
           <div
             key={index}
-            className={`mb-8 flex justify-between items-center w-full ${
-              index % 2 === 0 ? "flex-row-reverse" : ""
-            }`}
+            className={`relative flex items-center justify-between w-full mb-12 
+            ${index % 2 === 0 ? "flex-row-reverse" : ""}`}
           >
-            {/* Content container */}
-            <div className="w-5/12">
-              <div className="p-4 bg-gradient-to-r from-blue-600 to-teal-600 rounded-lg shadow-md">
-                <h4 className="text-xl font-semibold text-black">{item.degree}</h4>
-                <p className="text-sm text-black">{item.institute}</p>
-                <p className="text-xs text-black">CGPA/Percentage: {item.grade}</p>
-                <span className="text-xs text-black">{item.year}</span>
-              </div>
+            {/* Education Details */}
+            <div className="w-5/12 bg-green-400 text-black border border-green-600 
+              p-5 rounded-lg shadow-lg transition-all duration-300 hover:bg-green-500 hover:scale-105">
+              <h4 className="text-xl font-semibold">{item.degree}</h4>
+              <p className="text-sm">{item.institute}</p>
+              <p className="text-sm">CGPA/Percentage: {item.grade}</p>
+              <span className="text-xs">{item.year}</span>
             </div>
-            {/* Dot */}
-            <div className="w-4 h-4 bg-yellow-400 rounded-full z-10"></div>
+
+            {/* Timeline Dot */}
+            <div className="w-5 h-5 bg-green-400 border-2 border-green-600 rounded-full absolute left-1/2 transform -translate-x-1/2"></div>
           </div>
         ))}
       </div>
