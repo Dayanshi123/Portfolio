@@ -1,69 +1,77 @@
 import React from "react";
 import "devicon/devicon";
 
-// Skill data
 const skills = [
   {
     category: "Languages",
     items: [
-      { name: "C++", icon: "devicon-cplusplus-plain colored" },
-      { name: "Python", icon: "devicon-python-plain colored" },
-      { name: "JavaScript", icon: "devicon-javascript-plain colored" },
-      { name: "HTML5", icon: "devicon-html5-plain colored" },
-      { name: "CSS3", icon: "devicon-css3-plain colored" },
+      { name: "C++", icon: "devicon-cplusplus-plain" },
+      { name: "Python", icon: "devicon-python-plain" },
+      { name: "JavaScript", icon: "devicon-javascript-plain" },
+      { name: "HTML5", icon: "devicon-html5-plain" },
+      { name: "CSS3", icon: "devicon-css3-plain" },
     ],
   },
   {
     category: "Libraries & Frameworks",
     items: [
-      { name: "C++ STL", icon: "devicon-cplusplus-plain colored" },
-      { name: "React", icon: "devicon-react-original colored" },
-      { name: "Tailwind CSS", icon: "devicon-tailwindcss-plain colored" },
-      { name: "MongoDB", icon: "devicon-mongodb-plain colored" },
-      { name: "Express.js", icon: "devicon-express-original colored" },
-      { name: "Node.js", icon: "devicon-nodejs-plain colored" },
+      { name: "C++ STL", icon: "devicon-cplusplus-plain" },
+      { name: "React", icon: "devicon-react-original" },
+      { name: "Tailwind CSS", icon: "devicon-tailwindcss-plain" },
+      { name: "Express.js", icon: "devicon-express-original" },
+      { name: "Node.js", icon: "devicon-nodejs-plain" },
     ],
   },
   {
     category: "Databases & Tools",
     items: [
-      { name: "MySQL", icon: "devicon-mysql-plain colored" },
-      { name: "Git", icon: "devicon-git-plain colored" },
+      { name: "MongoDB", icon: "devicon-mongodb-plain" },
+      { name: "MySQL", icon: "devicon-mysql-plain" },
+      { name: "Git", icon: "devicon-git-plain" },
     ],
   },
   {
     category: "Coursework",
     items: [
-      { name: "Data Structures & Algorithms", icon: "devicon-java-plain colored" },
-      { name: "Operating Systems", icon: "devicon-linux-plain colored" },
-      { name: "Object-Oriented Programming", icon: "devicon-cplusplus-plain colored" },
-      { name: "Database Management Systems", icon: "devicon-mysql-plain colored" },
+      { name: "Data Structures & Algorithms", icon: "devicon-cplusplus-plain" },
+      { name: "Database Management System", icon: "devicon-mysql-plain" },
+      { name: "Operating Systems", icon: "devicon-linux-plain" },
+      { name: "Object-Oriented Programming", icon: "devicon-cplusplus-plain" },
     ],
   },
   {
     category: "Interests",
     items: [
-      { name: "Web Development", icon: "devicon-javascript-plain colored" },
-      { name: "Machine Learning", icon: "devicon-python-plain colored" },
+      { name: "Web Development", icon: "devicon-javascript-plain" },
+      { name: "Machine Learning", icon: "devicon-python-plain" },
     ],
   },
   {
     category: "Soft Skills",
     items: [
-      { name: "Self-learning", icon: "devicon-git-plain colored" },
-      { name: "Leadership", icon: "devicon-git-plain colored" },
-      { name: "Event Management", icon: "devicon-git-plain colored" },
-      { name: "Public Speaking", icon: "devicon-git-plain colored" },
-      { name: "Workflow Management", icon: "devicon-git-plain colored" },
+      { name: "Self-learning", icon: "devicon-git-plain" },
+      { name: "Leadership", icon: "devicon-git-plain" },
+      { name: "Event Management", icon: "devicon-git-plain" },
+      { name: "Public Speaking", icon: "devicon-git-plain" },
+      { name: "Workflow Management", icon: "devicon-git-plain" },
     ],
   },
 ];
 
-const SkillsSection = () => {
+const SkillsSection = ({ darkMode }) => {
   return (
-    <section id="skills" className="w-full py-20 bg-[#0a0a0a] text-green-300">
+    <section
+      id="skills"
+      className={`w-full py-20 transition-all duration-300 ${
+        darkMode ? "bg-[#000000] text-[#E0E0E0]" : "bg-[#F8F9FA] text-[#0650d8]"
+      }`}
+    >
       <div className="max-w-6xl mx-auto px-6 text-center">
-        <h2 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600">
+        <h2
+          className={`text-5xl font-extrabold text-center ${
+            darkMode ? "text-[#56A8F5]" : "text-[#0650d8]"
+          }`}
+        >
           Skills
         </h2>
 
@@ -72,17 +80,31 @@ const SkillsSection = () => {
           {skills.map((skill, index) => (
             <div
               key={index}
-              className="p-6 rounded-lg shadow-lg bg-green-900 border border-green-600 transition-transform 
-              hover:scale-105 hover:shadow-lg hover:border-green-400"
+              className={`p-6 rounded-lg shadow-lg border transition-transform hover:scale-105 
+              hover:shadow-xl ${
+                darkMode
+                  ? "bg-[#121212] border-[#56A8F5] hover:border-[#8AC9FF]"
+                  : "bg-white border-[#0650d8] hover:border-[#03338d]"
+              }`}
             >
               {/* Category Name */}
-              <h3 className="text-2xl font-bold text-green-200 mb-4">{skill.category}</h3>
+              <h3
+                className={`text-2xl font-bold mb-4 ${
+                  darkMode ? "text-[#8AC9FF]" : "text-[#03338d]"
+                }`}
+              >
+                {skill.category}
+              </h3>
 
               {/* Skills List */}
               <ul className="space-y-2">
                 {skill.items.map((item, idx) => (
-                  <li key={idx} className="flex items-center space-x-3 text-green-100">
-                    <i className={`${item.icon} text-4xl text-green-300`}></i>
+                  <li key={idx} className="flex items-center space-x-3">
+                    <i
+                      className={`${item.icon} text-4xl ${
+                        darkMode ? "text-[#56A8F5]" : "text-[#0650d8]"
+                      }`}
+                    ></i>
                     <span className="text-lg">{item.name}</span>
                   </li>
                 ))}

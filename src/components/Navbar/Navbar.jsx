@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaSun, FaMoon } from "react-icons/fa";
 import { LuArrowDownRight } from "react-icons/lu";
 import { Link } from "react-scroll";
 
@@ -11,19 +11,20 @@ const links = [
   { link: "Contact", section: "contact" },
 ];
 
-const Navbar = () => {
+const Navbar = ({ darkMode, setDarkMode }) => {
+  
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-black border-b border-gray-800 shadow-md">
+    <nav
+      className={`border-b shadow-md fixed w-full z-10 transition-all duration-300 ${
+        darkMode ? "bg-[#000000] text-[#E0E0E0]" : "bg-[#F8F9FA] text-[#0650d8]"
+      }`}
+    >
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        {/* Logo */}
-        <span className="text-2xl font-semibold font-serif text-green-400">
-          PortFolio.
-        </span>
+        <span className="text-2xl font-semibold font-serif">PortFolio.</span>
 
-        {/* Desktop Navigation */}
-        <ul className="hidden md:flex gap-6 font-body text-md font-semibold text-gray-300">
+        <ul className="hidden md:flex gap-6 text-md font-bold">
           {links.map((link, index) => (
             <li key={index} className="group relative">
               <Link
@@ -32,19 +33,32 @@ const Navbar = () => {
                 duration={500}
                 offset={-130}
                 to={link.section}
-                className="cursor-pointer transition-all duration-300 text-green-300 hover:text-green-500"
+                className={`cursor-pointer transition-all duration-300 font-semibold ${
+                  darkMode
+                    ? "text-[#E0E0E0] hover:text-[#56A8F5]"
+                    : "text-[#0650d8] hover:text-[#3f85fd]"
+                }`}
               >
                 {link.link}
               </Link>
-              <div className="absolute left-0 bottom-0 bg-green-500 w-0 group-hover:w-full h-[2px] transition-all duration-300"></div>
+              <div
+                className={`absolute left-0 bottom-0 w-0 h-[2px] transition-all duration-300 group-hover:w-full ${
+                  darkMode ? "bg-[#56A8F5]" : "bg-[#0650d8]"
+                }`}
+              ></div>
             </li>
           ))}
         </ul>
 
-        {/* Hire Me */}
         <div className="flex items-center space-x-4 md:order-2">
-          <button className="text-black bg-green-500 font-medium rounded-lg text-sm px-6 py-2 flex items-center gap-1 transition-all hover:bg-green-600">
-            <Link spy={true} smooth={true} duration={500} offset={-120} to="contact" className="hover:text-gray-900">
+          <button
+            className={`font-medium rounded-lg text-sm px-6 py-2 flex items-center gap-1 transition-all ${
+              darkMode
+                ? "text-black bg-[#E0E0E0] hover:bg-[#56A8F5]"
+                : "text-white bg-[#0650d8] hover:bg-[#03338d]"
+            }`}
+          >
+            <Link spy={true} smooth={true} duration={500} offset={-120} to="contact">
               Hire Me
             </Link>
             <div className="sm:hidden md:block">
@@ -52,27 +66,29 @@ const Navbar = () => {
             </div>
           </button>
 
-          {/* Hamburger Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-gray-300 hover:bg-gray-800 p-2 rounded-lg transition-all"
-          >
-            {isOpen ? <FaTimes size={26} /> : <FaBars size={26} />}
-          </button>
+          <div className="flex items-center space-x-4">
+            <button onClick={() => setDarkMode(!darkMode)} className="p-2 transition-all">
+              {darkMode ? <FaSun size={22} /> : <FaMoon size={22} />}
+            </button>
+
+            <button onClick={() => setIsOpen(!isOpen)} className="md:hidden p-2 bg-transparent transition-all">
+              {isOpen ? <FaTimes size={26} /> : <FaBars size={26} />}
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Mobile Navigation - Fullscreen Overlay */}
+      {/* Mobile Navigation */}
       <div
-        className={`fixed top-0 left-0 w-full h-screen bg-black flex flex-col items-center justify-center text-gray-300 transition-transform duration-500 ${
+        className={`fixed top-0 left-0 w-full h-screen flex flex-col items-center justify-center transition-transform duration-500 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } md:hidden`}
+        } ${darkMode ? "bg-[#000000] text-[#E0E0E0]" : "bg-[#F8F9FA] text-[#0650d8]"} md:hidden`}
       >
-        <button onClick={() => setIsOpen(false)} className="absolute top-6 right-6 text-white text-3xl">
+        <button onClick={() => setIsOpen(false)} className="absolute top-6 right-6 text-3xl">
           <FaTimes />
         </button>
 
-        <ul className="flex flex-col gap-8 text-2xl">
+        <ul className="flex flex-col gap-8 text-2xl font-bold">
           {links.map((link, index) => (
             <li key={index} className="group">
               <Link
@@ -81,7 +97,7 @@ const Navbar = () => {
                 duration={500}
                 offset={-130}
                 to={link.section}
-                className="cursor-pointer hover:text-green-400 transition-all duration-300"
+                className="cursor-pointer hover:opacity-80 transition-all duration-300"
                 onClick={() => setIsOpen(false)}
               >
                 {link.link}
@@ -92,6 +108,7 @@ const Navbar = () => {
       </div>
     </nav>
   );
+
 };
 
 export default Navbar;

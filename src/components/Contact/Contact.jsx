@@ -1,94 +1,140 @@
 import { useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
-import { FaLinkedin, FaInstagram, FaEnvelope, FaGithub } from "react-icons/fa";
+import { FaLinkedin, FaEnvelope, FaGithub } from "react-icons/fa";
 
-const Contact = () => {
+const Contact = ({ darkMode }) => {
   const form = useRef();
   const [messageSent, setMessageSent] = useState(false);
 
-  const sendEmail = (e) => {
+  const sendEmail = async (e) => {
     e.preventDefault();
 
-    emailjs.sendForm("your_service_id", "your_template_id", form.current, "your_public_key")
-      .then(() => {
-        setMessageSent(true);
-        form.current.reset();
-      })
-      .catch(error => console.error("Email failed to send", error));
+    const response = await fetch("https://formsubmit.co/jaindayanshi123@gmail.com", {
+      method: "POST",
+      body: new FormData(form.current),
+    });
+
+    if (response.ok) {
+      setMessageSent(true);
+      form.current.reset();
+      setTimeout(() => setMessageSent(false), 10000);
+    } else {
+      console.error("Email failed to send");
+    }
   };
 
   return (
-    <section id="contact" className="w-full py-20 bg-[#0a0a0a] text-green-300">
-      
-      <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10">
+    <section
+      id="contact"
+      className={`w-full py-20 transition-all duration-300 ${
+        darkMode ? "bg-[#000000] text-[#E0E0E0]" : "bg-[#F8F9FA] text-[#0650d8]"
+      }`}
+    >
+      <div className="max-w-6xl mx-auto px-6 text-center">
         
-        {/* Left Side - Contact Information */}
-        <div className="flex flex-col justify-center">
-          <h2 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600">
-            Get in touch
-          </h2>
-          <p className="mt-4 text-green-400 text-lg">
-            I'd love to hear from you! Whether you have a question, feedback, or just want to connect, feel free to reach out.
-            You can contact me through the options below or fill out the form to send a message directly.
-          </p>
+        {/* Contact Title */}
+        <h2
+          className={`text-5xl font-extrabold ${
+            darkMode ? "text-[#56A8F5]" : "text-[#0650d8]"
+          }`}
+        >
+          Get in Touch
+        </h2>
+        <p className="mt-4 text-lg">
+          Have questions or just want to connect? Reach out to me through the form below!
+        </p>
 
-          <div className="mt-6 space-y-4 text-lg">
+        {/* Contact Grid */}
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          {/* Left - Contact Info */}
+          <div className="flex flex-col justify-center space-y-6">
             <div className="flex items-center space-x-3">
-              <FaEnvelope className="text-green-400 text-2xl" />
-              <a href="mailto:jaindayanshi123@gmail.com" className="text-green-300 hover:text-green-400 transition">
+              <FaEnvelope className={`text-2xl ${darkMode ? "text-[#56A8F5]" : "text-[#0650d8]"}`} />
+              <a href="mailto:jaindayanshi123@gmail.com" className="hover:underline">
                 jaindayanshi123@gmail.com
               </a>
             </div>
             <div className="flex items-center space-x-3">
-              <FaGithub className="text-green-500 text-2xl" />
-              <a href="https://github.com/Dayanshi123" target="_blank" rel="noopener noreferrer" className="text-green-300 hover:text-green-500 transition">
+              <FaGithub className={`text-2xl ${darkMode ? "text-[#56A8F5]" : "text-[#0650d8]"}`} />
+              <a href="https://github.com/Dayanshi123" target="_blank" rel="noopener noreferrer" className="hover:underline">
                 Dayanshi123
               </a>
             </div>
             <div className="flex items-center space-x-3">
-              <FaLinkedin className="text-green-500 text-2xl" />
-              <a href="https://www.linkedin.com/in/dayanshi-jain" target="_blank" rel="noopener noreferrer" className="text-green-300 hover:text-green-500 transition">
+              <FaLinkedin className={`text-2xl ${darkMode ? "text-[#56A8F5]" : "text-[#0650d8]"}`} />
+              <a href="https://www.linkedin.com/in/dayanshi-jain" target="_blank" rel="noopener noreferrer" className="hover:underline">
                 Dayanshi Jain
               </a>
             </div>
           </div>
-        </div>
 
-        {/* Right Side - Contact Form */}
-        <div className="bg-[#121212] p-8 rounded-lg shadow-lg border border-green-600">
-          <h3 className="text-3xl font-semibold text-green-400 mb-6">Send a Message</h3>
-          
-          <form ref={form} onSubmit={sendEmail} className="space-y-6">
-            <input
-              type="text"
-              name="user_name"
-              placeholder="Your Name"
-              required
-              className="w-full p-3 rounded-lg bg-[#1a1a1a] text-green-300 border border-green-500 focus:outline-none focus:border-green-400 shadow-md"
-            />
-            <input
-              type="email"
-              name="user_email"
-              placeholder="Your Email"
-              required
-              className="w-full p-3 rounded-lg bg-[#1a1a1a] text-green-300 border border-green-500 focus:outline-none focus:border-green-400 shadow-md"
-            />
-            <textarea
-              name="message"
-              placeholder="Your Message"
-              required
-              className="w-full p-3 rounded-lg bg-[#1a1a1a] text-green-300 border border-green-500 focus:outline-none focus:border-green-400 shadow-md"
-            ></textarea>
+          {/* Right - Contact Form */}
+          <div
+            className={`p-8 rounded-lg shadow-lg border transition-all duration-300 ${
+              darkMode
+                ? "bg-[#121212] border-[#56A8F5] hover:border-[#8AC9FF]"
+                : "bg-white border-[#0650d8] hover:border-[#03338d]"
+            }`}
+          >
+            <h3
+              className={`text-3xl font-semibold mb-6 ${
+                darkMode ? "text-[#8AC9FF]" : "text-[#03338d]"
+              }`}
+            >
+              Send a Message
+            </h3>
+            
+            <form ref={form} onSubmit={sendEmail} className="space-y-6">
+              <input type="hidden" name="_captcha" value="false" />
+              <input
+                type="text"
+                name="user_name"
+                placeholder="Your Name"
+                required
+                className={`w-full p-3 rounded-lg border focus:outline-none shadow-md
+                  ${darkMode? "text-black" :"text-black" }`}
+              />
+              <input
+                type="email"
+                name="user_email"
+                placeholder="Your Email"
+                required
+                className={`w-full p-3 rounded-lg border focus:outline-none shadow-md
+                  ${darkMode? "text-black" :"text-black" }`}
+              />
+              <textarea
+                name="message"
+                placeholder="Your Message"
+                required
+                className={`w-full p-3 rounded-lg border focus:outline-none shadow-md
+                  ${darkMode? "text-black" :"text-black" }`}
+              ></textarea>
 
-            <button type="submit" className="w-full py-3 bg-green-500 hover:bg-green-600 text-black font-bold rounded-lg transition shadow-lg hover:shadow-green-400">
-              Send Message
-            </button>
-          </form>
+              <button
+                type="submit"
+                className={`w-full py-3 font-bold rounded-lg transition transform hover:scale-105 shadow-md hover:shadow-lg ${
+                  darkMode
+                    ? "bg-[#56A8F5] text-black hover:bg-[#8AC9FF]"
+                    : "bg-[#0650d8] text-white hover:bg-[#03338d]"
+                }`}
+              >
+                Send Message
+              </button>
+            </form>
 
-          {messageSent && <p className="text-green-400 text-center mt-4">Message Sent Successfully!</p>}
+            {/* Success Message */}
+            {messageSent && (
+              <p
+                className={`mt-4 text-center font-semibold transition-all duration-300 ${
+                  darkMode ? "text-[#56A8F5]" : "text-[#0650d8]"
+                }`}
+              >
+                ✅ Message Sent Successfully!
+              </p>
+            )}
+          </div>
         </div>
       </div>
-
     </section>
   );
 };

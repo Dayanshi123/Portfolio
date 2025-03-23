@@ -1,35 +1,41 @@
-import React, { useState } from "react"; 
+import React, { useState, useRef } from "react";
 import { FaGraduationCap, FaUsers } from "react-icons/fa";
 import Education from "./EducationCard";
 import POR from "./PORCard";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Pagination } from "swiper/modules";
 
-const About = () => {
-  const [activeCard, setActiveCard] = useState(null);
-
-  const toggleCard = (index) => {
-    setActiveCard(activeCard === index ? null : index);
-  };
+const About = ({ darkMode }) => {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const swiperRef = useRef(null); // Store Swiper instance
 
   const cards = [
     {
       title: "Education",
       icon: <FaGraduationCap />,
-      component: <Education />,
+      component: <Education darkMode={darkMode} />,
     },
     {
       title: "POR",
       icon: <FaUsers />,
-      component: <POR />,
+      component: <POR darkMode={darkMode} />,
     },
   ];
 
   return (
-    <section id="about" className="w-full py-20 bg-[#0a0a0a] text-[#d1fae5]">
+    <section
+      id="about"
+      className={`w-full py-20 transition-all duration-300 ${
+        darkMode ? "bg-[#000000] text-[#E0E0E0]" : "bg-[#F8F9FA] text-[#0650d8]"
+      }`}
+    >
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Title */}
-        <h2 className="text-5xl font-extrabold text-green-400 text-center">
-          About Me
-        </h2>
+        <h2 className={`text-5xl font-extrabold text-center ${
+            darkMode ? "text-[#56A8F5]" : "text-[#0650d8]"
+          }`}>About Me</h2>
 
         <div className="flex flex-col md:flex-row items-center mt-10">
           {/* Avatar */}
@@ -37,78 +43,86 @@ const About = () => {
             <img
               src="/public/mee.jpg"
               alt="Avatar"
-              className="w-52 h-52 object-cover rounded-full border-4 border-green-400"
+              className="w-64 h-64 object-cover rounded-lg border-4 shadow-6xl transition-all duration-300
+              border-[#0650d8] shadow-blue-400 dark:border-[#56A8F5] dark:shadow-stone-100"
             />
           </div>
 
           {/* Info */}
           <div className="w-full md:w-2/3 mt-6 md:mt-0 md:pl-10 text-center md:text-left">
-            <h3 className="text-3xl font-bold text-green-400">
-              Dayanshi Jain - Software Developer
-            </h3>
-            <p className="text-lg text-[#d1fae5] mt-4 leading-relaxed">
-              I am passionate about{" "}
-              <span className="font-semibold text-green-300">
-                machine learning and software development.
+            <h3 className="text-3xl font-bold">Dayanshi Jain - Software Developer</h3>
+            <p className="text-lg mt-4 leading-relaxed">
+              Passionate about crafting clean, efficient, and scalable code, I specialize in{" "}
+              <span className={`font-semibold ${darkMode ? "text-[#56A8F5]" : "text-[#0650d8]"}`}>
+                machine learning, full-stack development, and AI applications.
               </span>{" "}
-              I specialize in building{" "}
-              <span className="font-semibold text-green-300">
-                scalable web applications and deep learning models.
-              </span>{" "}
-              My expertise includes{" "}
-              <span className="font-semibold text-green-300">
-                Python, C++, JavaScript, HTML/CSS
-              </span>{" "}
-              and frameworks like{" "}
-              <span className="font-semibold text-green-300">
-                TensorFlow, Keras, and React.js.
-              </span>{" "}
+              With experience in{" "}
+              <span className={`font-semibold ${darkMode ? "text-[#56A8F5]" : "text-[#0650d8]"}`}>
+                Python, C++, JavaScript, React.js, and TensorFlow
+              </span>, I aim to build innovative solutions that merge technology and intelligence.
               <br />
               <br />
-              I have a{" "}
-              <span className="font-semibold text-green-300">4-star rating</span> on
-              GeeksforGeeks and have solved{" "}
-              <span className="font-semibold text-green-300">800+ problems</span> on
-              platforms like{" "}
-              <span className="font-semibold text-green-300">LeetCode</span> and{" "}
-              <span className="font-semibold text-green-300">CodeStudio</span>. I have participated in{" "}
-              <span className="font-semibold text-green-300">50+ coding contests</span>, including{" "}
-              <span className="font-semibold text-green-300">Flipkart Grid</span> and{" "}
-              <span className="font-semibold text-green-300">Amazon HackOn</span>.
+              A competitive programmer with a{" "}
+              <span className={`font-semibold ${darkMode ? "text-[#56A8F5]" : "text-[#0650d8]"}`}>
+                4-star GeeksforGeeks rating
+              </span> and{" "}
+              <span className={`font-semibold ${darkMode ? "text-[#56A8F5]" : "text-[#0650d8]"}`}>
+                800+ problems solved
+              </span> on LeetCode & CodeStudio, I thrive on problem-solving and optimization.
             </p>
           </div>
         </div>
 
-        {/* Buttons to Open Cards */}
-        <div className="flex flex-wrap justify-center gap-6 mt-10">
-          {cards.map((card, index) => (
-            <button
-              key={index}
-              onClick={() => toggleCard(index)}
-              className={`px-6 py-3 rounded-xl text-lg font-semibold transition-all duration-300 border border-green-400 text-green-400 hover:bg-green-400 hover:text-black`}
-            >
-              {card.title}
-            </button>
-          ))}
+        {/* Toggle Button */}
+        <div className="flex justify-center mt-8">
+          <button
+            onClick={() => {
+              const nextSlide = activeSlide === 0 ? 1 : 0;
+              setActiveSlide(nextSlide);
+              swiperRef.current?.slideTo(nextSlide); // Move Swiper Slide
+            }}
+            className={`px-6 py-3 font-bold text-lg rounded-lg transition-all duration-300 
+              ${darkMode ? "bg-[#56A8F5] text-black" : "bg-[#0650d8] text-white"}
+              hover:scale-105`}
+          >
+            {activeSlide === 0 ? "View Education" : "View Position of Responsibilty"}
+          </button>
         </div>
 
-        {/* Card Display Section */}
-        <div className="mt-12 flex justify-center">
-          {activeCard !== null && (
-            <div className="p-6 w-full md:w-5/6 lg:w-full rounded-lg bg-[#0a0a0a] border border-green-400 transition-all">
-              <div className="flex items-center gap-4 justify-center">
-                <span className="text-5xl text-green-400">
-                  {cards[activeCard].icon}
-                </span>
-                <h3 className="text-4xl font-bold text-green-400">
-                  {cards[activeCard].title}
-                </h3>
-              </div>
-              <div className="mt-6 text-[#d1fae5] text-lg">
-                {cards[activeCard].component}
-              </div>
-            </div>
-          )}
+        {/* Swiper Cards */}
+        <div className="mt-6">
+          <Swiper
+            modules={[Pagination]}
+            pagination={{ clickable: true }}
+            spaceBetween={50}
+            slidesPerView={1}
+            className="w-full md:w-5/6 lg:w-full"
+            onSlideChange={(swiper) => setActiveSlide(swiper.activeIndex)}
+            onSwiper={(swiper) => (swiperRef.current = swiper)} // Store Swiper instance
+            initialSlide={activeSlide} // Sync with state
+          >
+            {cards.map((card, index) => (
+              <SwiperSlide key={index} className="flex flex-col items-center">
+                <div
+                  className={`p-6 w-full rounded-lg border transition-all shadow-lg ${
+                    darkMode
+                      ? "border-[#56A8F5] bg-[#121212]"
+                      : "border-[#0650d8] bg-[#E3F2FD]"
+                  }`}
+                >
+                  <div className="flex items-center gap-4 justify-center">
+                    <span className={`text-5xl ${darkMode ? "text-[#56A8F5]" : "text-[#0650d8]"}`}>
+                      {card.icon}
+                    </span>
+                    <h3 className={`text-4xl font-bold ${darkMode ? "text-[#56A8F5]" : "text-[#0650d8]"}`}>
+                      {card.title}
+                    </h3>
+                  </div>
+                  <div className="mt-6 text-lg">{card.component}</div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </div>
     </section>

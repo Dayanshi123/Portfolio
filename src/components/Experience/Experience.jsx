@@ -1,7 +1,6 @@
 import React from "react";
 import "devicon/devicon";
 
-// Experience data
 const experiences = [
   {
     company: "AICTE - EduSkills",
@@ -9,40 +8,50 @@ const experiences = [
     duration: "June 2024 - July 2024",
     contributions: [
       "Developed and optimized machine learning models for classification, regression, and clustering tasks.",
+      "Worked extensively on IBM Cloud, utilizing Watsonx Assistant for AI-driven chatbot development.",
       "Implemented feature engineering and hyperparameter tuning to enhance model performance.",
       "Gained hands-on experience with Python, TensorFlow, Scikit-Learn, and Keras for real-world ML applications.",
     ],
-    icon: "devicon-python-plain colored",
+    icon: "devicon-python-plain",
   },
   {
-    company: "Zeenith (Coding Club)",
-    role: "Team-Head",
+    company: "Zeenith Coding Club",
+    role: "Technical Team Head",
     duration: "Aug 2022 - Present",
     contributions: [
       "Led the college coding club, organizing coding contests, hackathons, and mentorship programs.",
-      "Guided students in data structures, algorithms, and competitive programming, improving problem-solving skills.",
-      "Facilitated technical workshops and coding bootcamps to enhance coding culture on campus.",
+      "Guided students in data structures, algorithms, and competitive programming.",
+      "Facilitated technical workshops and coding bootcamps to strengthen the coding culture on campus.",
     ],
     icon: "devicon-devicon-plain",
   },
   {
-    company: "AAROHA (NGO)",
+    company: "AAROHA NGO",
     role: "Tutor",
     duration: "Oct 2022 - July 2024",
     contributions: [
-      "Mentored underprivileged students, improving their academic performance by 20-30%.",
-      "Designed personalized learning plans and interactive sessions to enhance engagement and retention.",
-      "Encouraged continued learning through hands-on activities and educational outreach programs.",
+      "Mentored underprivileged students, helping them improve their academic understanding.",
+      "Designed personalized learning plans and interactive sessions for better engagement.",
+      "Encouraged continuous learning through hands-on activities and outreach programs.",
     ],
-    icon: "devicon-git-plain colored",
+    icon: "devicon-git-plain",
   },
 ];
 
-const ExperienceSection = () => {
+const ExperienceSection = ({ darkMode }) => {
   return (
-    <section id="experience" className="w-full py-20 bg-[#0a0a0a] text-green-300">
-      <div className="max-w-6xl mx-auto px-6 text-center">
-        <h2 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600">
+    <section
+      id="experience"
+      className={`w-full py-20 transition-all duration-300 ${
+        darkMode ? "bg-[#000000] text-[#E0E0E0]" : "bg-[#F8F9FA] text-[#0650d8]"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 text-center">
+        <h2
+          className={`text-5xl font-extrabold ${
+            darkMode ? "text-[#56A8F5]" : "text-[#0650d8]"
+          }`}
+        >
           Experience
         </h2>
 
@@ -51,23 +60,45 @@ const ExperienceSection = () => {
           {experiences.map((exp, index) => (
             <div
               key={index}
-              className="p-6 rounded-lg shadow-lg bg-green-900 border border-green-600 transition-transform 
-              hover:scale-105 hover:shadow-lg hover:border-green-400"
+              className={`p-6 rounded-lg shadow-lg border transition-transform 
+              hover:scale-105 hover:shadow-xl ${
+                darkMode
+                  ? "bg-[#121212] border-[#56A8F5] hover:border-[#8AC9FF]"
+                  : "bg-white border-[#0650d8] hover:border-[#03338d]"
+              }`}
             >
               {/* Icon */}
               <div className="flex items-center justify-center mb-4">
-                <i className={`${exp.icon} text-5xl text-green-300`}></i>
+                <i
+                  className={`${exp.icon} text-5xl ${
+                    darkMode ? "text-[#56A8F5]" : "text-[#0650d8]"
+                  }`}
+                ></i>
               </div>
 
               {/* Experience Details */}
-              <h3 className="text-2xl font-bold text-green-200">{exp.company}</h3>
-              <h4 className="text-xl font-semibold text-green-400">{exp.role}</h4>
-              <p className="text-green-500">{exp.duration}</p>
+              <h3
+                className={`text-2xl font-bold ${
+                  darkMode ? "text-[#8AC9FF]" : "text-[#03338d]"
+                }`}
+              >
+                {exp.company}
+              </h3>
+              <h4
+                className={`text-xl font-semibold ${
+                  darkMode ? "text-[#56A8F5]" : "text-[#0650d8]"
+                }`}
+              >
+                {exp.role}
+              </h4>
+              <p className="text-sm">{exp.duration}</p>
 
               {/* Contributions */}
-              <ul className="mt-3 text-green-100 text-left list-disc list-inside">
+              <ul className="mt-3 text-left list-disc list-inside space-y-1">
                 {exp.contributions.map((item, idx) => (
-                  <li key={idx} className="text-green-300">{item}</li>
+                  <li key={idx} className="text-base">
+                    {item}
+                  </li>
                 ))}
               </ul>
             </div>

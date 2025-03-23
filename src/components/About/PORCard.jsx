@@ -1,82 +1,48 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
+import { FaUsers, FaHandshake, FaMicrophone, FaLaptopCode } from "react-icons/fa";
 
-const PORCard = () => {
-  const porData = [
-    {
-      position: "Core Team Member",
-      organization: "Training Placement Cell",
-      description:
-        "Actively contribute to training and placement initiatives by collaborating with recruiters, facilitating student career development, and organizing online assessments, recruiter interviews, and skill-enhancement sessions to maximize placement opportunities.",
-    },
-    {
-      position: "Event Coordinator, Sponsorship Head, Anchor",
-      organization: "Roobaroo",
-      description:
-        "Led event planning and execution, managed sponsorship acquisitions, and hosted major events with engaging public speaking skills. Played a key role in organizing cultural and technical events, ensuring smooth operations, and securing sponsorships to enhance event quality.",
-    },
-    {
-      position: "Team Head",
-      organization: "Zeenith (Coding Club)",
-      description:
-        "Spearheaded the college coding club, organizing coding competitions, hackathons, and mentorship programs to foster a strong programming culture. Guided students in problem-solving, data structures, and algorithms, helping them prepare for competitive coding and technical interviews.",
-    },
-    {
-      position: "Volunteer Member",
-      organization: "AAROHA (NGO)",
-      description:
-        "Worked towards educational empowerment, mentoring underprivileged children through personalized learning plans, interactive sessions, and academic support. Played a crucial role in enhancing student engagement and improving learning outcomes.",
-    },
-  ];
+const porData = [
+  {
+    role: "Core Team Member - Training Placement Cell",
+    description: "Contributed to training and placement initiatives, organized online assessments, recruiter interviews, and skill-enhancement sessions.",
+    icon: <FaUsers />,
+  },
+  {
+    role: "Event Coordinator, Sponsorship Head, Anchor - Roobaroo Cultural Club",
+    description: "Led event planning, managed sponsorships, and hosted events with engaging public speaking skills.",
+    icon: <FaMicrophone />,
+  },
+  {
+    role: "Technical Team Head - Zeenith Coding Club",
+    description: "Organized coding competitions, hackathons, and mentorship programs to foster a strong programming culture.",
+    icon: <FaLaptopCode />,
+  },
+  {
+    role: "Volunteer Member - AAROHA NGO",
+    description: "Mentored underprivileged children with interactive learning sessions and academic support.",
+    icon: <FaHandshake />,
+  },
+];
 
-  const [activeIndex, setActiveIndex] = useState(null);
-
-  const toggleDropdown = (index) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
-
+const PORCard = ({ darkMode }) => {
   return (
-    <div className="flex flex-col items-center p-6 text-green-300 bg-[#0a0a0a]">
-      <div className="w-full md:w-3/4 lg:w-1/2 space-y-6">
-        {porData.map((por, index) => (
-          <motion.div
-            key={index}
-            className="relative bg-green-900 text-green-200 border border-green-600 rounded-xl shadow-md p-5 
-            transition-all cursor-pointer hover:bg-green-800 hover:text-green-100 hover:shadow-lg"
-            onClick={() => toggleDropdown(index)}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            <div className="flex justify-between items-center">
-              <div>
-                <h3 className="text-xl font-bold">{por.position}</h3>
-                <p className="text-sm">{por.organization}</p>
-              </div>
-              <div
-                className={`w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-300 ${
-                  activeIndex === index ? "rotate-180 bg-green-700" : "bg-green-600"
-                }`}
-              >
-                ▼
-              </div>
-            </div>
-
-            <AnimatePresence>
-              {activeIndex === index && (
-                <motion.div
-                  className="mt-4 bg-green-800 text-green-100 p-4 rounded-lg shadow-inner"
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {por.description}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        ))}
-      </div>
+    <div className="flex flex-col items-center">
+      {porData.map((por, index) => (
+        <div
+          key={index}
+          className={`w-full p-4 my-4 rounded-lg shadow-md flex items-center transition-transform duration-300 
+          ${darkMode ? "bg-[#1e1e1e] border-[#56A8F5] text-white" : "bg-[#e3f2fd] border-[#0650d8] text-black"}
+          hover:scale-105 border-2`}
+        >
+          <div className="text-4xl p-3 rounded-full bg-[#56A8F5] dark:bg-[#0650d8] text-white">
+            {por.icon}
+          </div>
+          <div className="ml-4">
+            <h3 className="text-xl font-bold">{por.role}</h3>
+            <p className="text-md">{por.description}</p>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
